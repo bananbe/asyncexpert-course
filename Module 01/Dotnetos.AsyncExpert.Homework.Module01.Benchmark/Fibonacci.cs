@@ -3,7 +3,7 @@ using BenchmarkDotNet.Attributes;
 
 namespace Dotnetos.AsyncExpert.Homework.Module01.Benchmark
 {
-	[MemoryDiagnoser]
+    [MemoryDiagnoser]
     [DisassemblyDiagnoser(exportCombinedDisassemblyReport: true)]
     public class FibonacciCalc
     {
@@ -35,28 +35,28 @@ namespace Dotnetos.AsyncExpert.Homework.Module01.Benchmark
         [ArgumentsSource(nameof(Data))]
         public ulong RecursiveWithMemoization(ulong n)
         {
-	        if (fibonacciCache.ContainsKey(n)) return fibonacciCache[n];
+            if (fibonacciCache.ContainsKey(n)) return fibonacciCache[n];
 
-	        if (n == 1 || n == 2) return 1;
+            if (n == 1 || n == 2) return 1;
 
             fibonacciCache[n] = RecursiveWithMemoization(n - 2) + RecursiveWithMemoization(n - 1);
-	        return fibonacciCache[n];
+            return fibonacciCache[n];
         }
         
         [Benchmark]
         [ArgumentsSource(nameof(Data))]
         public ulong Iterative(ulong n)
         {
-	        ulong previous_previous, previous= 0, current = 1;
-	        
-	        for (ulong i = 1; i < n; i++)
-	        {
-		        previous_previous = previous;
-		        previous = current;
-		        current = previous_previous + previous;
-	        }
+            ulong previous_previous, previous= 0, current = 1;
+            
+            for (ulong i = 1; i < n; i++)
+            {
+                previous_previous = previous;
+                previous = current;
+                current = previous_previous + previous;
+            }
 
-	        return current;
+            return current;
         }
 
         public IEnumerable<ulong> Data()
